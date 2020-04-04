@@ -2,18 +2,16 @@ package com.zhaopanlong.platenum;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,7 +34,7 @@ public class PlateNumView extends LinearLayout {
     private View[] mViewArrs = new View[mViewCount];
     private int mIndicatePostion = -1;
 
-    private int mTextSize ;
+    private int mTextSize;
     private int mTextColor;
     private int mLineWidth;
     private int mItemMargin;
@@ -274,6 +272,59 @@ public class PlateNumView extends LinearLayout {
             plateNUm += ((TextView) mViewArr).getText();
         }
         return plateNUm;
+    }
+
+    /**
+     * 设置默认车牌号
+     *
+     * @param plateNum
+     */
+    public void setPlateNum(String plateNum) {
+        if (TextUtils.isEmpty(plateNum)) {
+            return;
+        }
+        char[] chars = plateNum.toCharArray();
+        for (int i = 0; i < mViewArrs.length; i++) {
+            DrawableTextView textView = (DrawableTextView) mViewArrs[i];
+            textView.setText(String.valueOf(chars[i]));
+            if (i == mViewCount - 1) {
+                textView.setTextSize(mTextSize);
+                textView.setDrawable(DrawableTextView.TOP, null, 0, 0);
+            }
+        }
+    }
+
+    /**
+     * 清空车牌号 默认不隐藏键盘 并且指示到第一个展示省份
+     */
+    public void clearPlateNum() {
+        clearPlateNum(false);
+    }
+
+    /**
+     * 清空车牌号是否隐藏车牌键盘
+     * 如果ture 就隐藏键盘
+     *
+     * @param hidleKeyBoard
+     */
+    public void clearPlateNum(boolean hidleKeyBoard) {
+        for (int i = 0; i < mViewArrs.length; i++) {
+            DrawableTextView textView = (DrawableTextView) mViewArrs[i];
+            if (i == mViewCount-1){
+                Drawable drawableTop = AppCompatResources.getDrawable(mContext, R.mipmap.icaon_add_destribute);
+                textView.setDrawable(DrawableTextView.TOP, drawableTop, drawableTop.getMinimumWidth(), drawableTop.getIntrinsicHeight());
+                textView.setTextSize((float) (mTextSize / 1.5));
+            }
+            textView.setText(null);
+        }
+        if (hidleKeyBoard) {
+            mIndicatePostion =0;
+            resetBg(mIndicatePostion);
+            mKeyboardPop.dismiss();
+        } else {
+            mViewArrs[0].callOnClick();
+        }
+
     }
 
     /**
