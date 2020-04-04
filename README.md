@@ -23,6 +23,12 @@ plateNumView.getPlateNum();
 
 # gradle
 
+~~~ java
+dependencies {
+	        implementation 'com.github.zhaopanlong:plateNum:1.0'
+	}
+~~~
+
 
 
 # 效果图
