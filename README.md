@@ -19,13 +19,33 @@
 
 获取车牌号
 
-plateNumView.getPlateNum();
+``` java
+  plateNumView.getPlateNum();
+```
+
+设置默认车牌号
+
+~~~ java
+plateNumView.setPlateNum(String plateNum);
+~~~
+
+默认清除车牌号，指示器会跑到第一个省份选项，并展示省份选择键盘
+
+~~~ jav
+plateNumView.clearPlateNum();
+~~~
+
+hidleKeyBoard 是否隐藏键盘，如果为true 指示器跑到第一个位置 不弹出省份键盘选择
+
+~~~ java
+plateNumView.clearPlateNum(boolean hidleKeyBoard);
+~~~
 
 # gradle
 
 ~~~ java
 dependencies {
-	        implementation 'com.github.zhaopanlong:plateNum:1.0'
+	        implementation 'com.github.zhaopanlong:plateNum:1.1'
 	}
 ~~~
 
