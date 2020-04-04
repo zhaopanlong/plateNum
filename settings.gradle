@@ -1,0 +1,3 @@
+rootProject.name='plateNum'
+include ':plateNumLib'
+include ':demo'

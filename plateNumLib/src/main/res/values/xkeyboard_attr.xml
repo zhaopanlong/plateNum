@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="XKeyboardView">
+
+        <!-- 删除按键的图标 -->
+        <attr name="deleteDrawable" format="reference" />
+
+        <!-- 删除按键图标的颜色 -->
+        <attr name="deleteColor" format="color|reference" />
+
+        <attr name="deleteBackground" format="reference"/>
+    </declare-styleable>
+
+</resources>
