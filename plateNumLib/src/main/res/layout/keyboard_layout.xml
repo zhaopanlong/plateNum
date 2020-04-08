@@ -7,9 +7,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:paddingLeft="15dp"
-        android:layout_marginBottom="10dp"
+        android:background="@color/colorKeyboardBg"
         android:paddingRight="15dp">
 
         <TextView
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="关闭"
+            android:layout_centerVertical="true"
             android:textSize="16dp"
             android:textColor="#333" />
     </RelativeLayout>
