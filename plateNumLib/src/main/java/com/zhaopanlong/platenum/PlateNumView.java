@@ -83,7 +83,6 @@ public class PlateNumView extends LinearLayout {
 
         for (int i = 0; i < mViewCount; i++) {
             DrawableTextView textView = (DrawableTextView) inflater.inflate(R.layout.textview, null);
-            textView.setBackground(getNormalBg());
             LayoutParams textViewParams = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1f);
             textView.setTextColor(mTextColor);
             textView.setTextSize(mTextSize);
@@ -96,8 +95,10 @@ public class PlateNumView extends LinearLayout {
                 textView.setTextSize((float) (mTextSize / 1.5));
                 textView.setCompoundDrawablePadding(5);
                 textView.setHint("新能源");
+                textView.setBackground(getNewEnergyNormalBg());
             } else {
                 textViewParams.setMargins(0, 0, mItemMargin, 0);
+                textView.setBackground(getNormalBg());
             }
 
             addView(textView, textViewParams);
@@ -195,11 +196,11 @@ public class PlateNumView extends LinearLayout {
             View mViewArr = mViewArrs[i];
             if (mViewArr == view) {
                 mIndicatePostion = i;
-                mViewArr.setBackground(getCheckedBg());
-            } else {
-                mViewArr.setBackground(getNormalBg());
+                break;
             }
         }
+
+        resetBg(mIndicatePostion);
 
     }
 
@@ -210,10 +211,20 @@ public class PlateNumView extends LinearLayout {
      */
     private void resetBg(int postion) {
         for (int i = 0; i < mViewArrs.length; i++) {
-            if (postion == i) {
-                mViewArrs[i].setBackground(getCheckedBg());
-            } else {
-                mViewArrs[i].setBackground(getNormalBg());
+            View view = mViewArrs[i];
+
+            if (postion == i){
+                if (i == mViewCount-1){
+                    view.setBackground(getNewEnergyCheckedBg());
+                }else {
+                    view.setBackground(getCheckedBg());
+                }
+            }else {
+                if (i == mViewCount-1){
+                    view.setBackground(getNewEnergyNormalBg());
+                }else {
+                    view.setBackground(getNormalBg());
+                }
             }
         }
     }
@@ -233,6 +244,20 @@ public class PlateNumView extends LinearLayout {
     }
 
     /**
+     * 获取新能源的选中背景
+     *
+     * @return
+     */
+    private GradientDrawable getNewEnergyCheckedBg() {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+        gradientDrawable.setColor(0xffffffff);
+        gradientDrawable.setStroke(mLineWidth, mLineCheckedColor, (float) Util.dp2px(mContext, 2), (float) Util.dp2px(mContext, 2));
+        gradientDrawable.setCornerRadius(Util.dp2px(mContext, 5));
+        return gradientDrawable;
+    }
+
+    /**
      * 获取普通背景
      *
      * @return
@@ -242,6 +267,20 @@ public class PlateNumView extends LinearLayout {
         gradientDrawable.setShape(GradientDrawable.RECTANGLE);
         gradientDrawable.setColor(0xffffffff);
         gradientDrawable.setStroke(mLineWidth, mLineNormalColor);
+        gradientDrawable.setCornerRadius(Util.dp2px(mContext, 5));
+        return gradientDrawable;
+    }
+
+    /**
+     * 获取新能源普通状态背景
+     *
+     * @return
+     */
+    private GradientDrawable getNewEnergyNormalBg() {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+        gradientDrawable.setColor(0xffffffff);
+        gradientDrawable.setStroke(mLineWidth, mLineNormalColor, (float) Util.dp2px(mContext, 2), (float) Util.dp2px(mContext, 2));
         gradientDrawable.setCornerRadius(Util.dp2px(mContext, 5));
         return gradientDrawable;
     }
@@ -310,7 +349,7 @@ public class PlateNumView extends LinearLayout {
     public void clearPlateNum(boolean hidleKeyBoard) {
         for (int i = 0; i < mViewArrs.length; i++) {
             DrawableTextView textView = (DrawableTextView) mViewArrs[i];
-            if (i == mViewCount-1){
+            if (i == mViewCount - 1) {
                 Drawable drawableTop = AppCompatResources.getDrawable(mContext, R.mipmap.icaon_add_destribute);
                 textView.setDrawable(DrawableTextView.TOP, drawableTop, drawableTop.getMinimumWidth(), drawableTop.getIntrinsicHeight());
                 textView.setTextSize((float) (mTextSize / 1.5));
@@ -318,7 +357,7 @@ public class PlateNumView extends LinearLayout {
             textView.setText(null);
         }
         if (hidleKeyBoard) {
-            mIndicatePostion =0;
+            mIndicatePostion = 0;
             resetBg(mIndicatePostion);
             mKeyboardPop.dismiss();
         } else {
