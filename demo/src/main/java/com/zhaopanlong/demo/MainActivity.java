@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         plateNumView = findViewById(R.id.plateNumView);
-        plateNumView.setPlateNum("渝A124AFEF545");
+        plateNumView.setPlateNum("渝A124121212");
         plateNumView.setmPlateNumViewTextWatcher(new PlateNumView.PlateNumViewTextWatcher() {
             @Override
             public void onTextChanged(String s) {

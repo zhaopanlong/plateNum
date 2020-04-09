@@ -328,8 +328,12 @@ public class PlateNumView extends LinearLayout {
         if (TextUtils.isEmpty(plateNum)) {
             return;
         }
+
         char[] chars = plateNum.toCharArray();
         for (int i = 0; i < mViewArrs.length; i++) {
+            if (i>chars.length-1){
+                break;
+            }
             DrawableTextView textView = (DrawableTextView) mViewArrs[i];
             textView.setText(String.valueOf(chars[i]));
             if (i == mViewCount - 1) {
