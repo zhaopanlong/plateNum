@@ -17,6 +17,8 @@
     />
 ~~~
 
+# api
+
 获取车牌号
 
 ``` java
@@ -40,6 +42,24 @@ hidleKeyBoard 是否隐藏键盘，如果为true 指示器跑到第一个位置 
 ~~~ java
 plateNumView.clearPlateNum(boolean hidleKeyBoard);
 ~~~
+
+判断键盘是否在展示
+
+```java
+public boolean isKeyBoardShowing()
+```
+
+隐藏键盘
+
+```java
+public void hidePlateKeyBord()
+```
+
+设置输入实时监听
+
+```java
+public void setmPlateNumViewTextWatcher(PlateNumViewTextWatcher mPlateNumViewTextWatcher)
+```
 
 # gradle
 
