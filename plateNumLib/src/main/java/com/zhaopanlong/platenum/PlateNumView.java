@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,8 @@ public class PlateNumView extends LinearLayout {
 
     private Context mContext;
     private TextViewOnClickListen mTextViewOnClickListen;
+    private TextviewTextChanged mTextviewTextChanged;
+    private PlateNumViewTextWatcher mPlateNumViewTextWatcher;
     private KeyBoardPop mKeyboardPop;
 
     //8位包含新能源
@@ -78,11 +82,13 @@ public class PlateNumView extends LinearLayout {
         setGravity(Gravity.CENTER_VERTICAL);
 
         mTextViewOnClickListen = new TextViewOnClickListen();
+        mTextviewTextChanged = new TextviewTextChanged();
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         for (int i = 0; i < mViewCount; i++) {
             DrawableTextView textView = (DrawableTextView) inflater.inflate(R.layout.textview, null);
+            textView.addTextChangedListener(mTextviewTextChanged);
             LayoutParams textViewParams = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1f);
             textView.setTextColor(mTextColor);
             textView.setTextSize(mTextSize);
@@ -213,16 +219,16 @@ public class PlateNumView extends LinearLayout {
         for (int i = 0; i < mViewArrs.length; i++) {
             View view = mViewArrs[i];
 
-            if (postion == i){
-                if (i == mViewCount-1){
+            if (postion == i) {
+                if (i == mViewCount - 1) {
                     view.setBackground(getNewEnergyCheckedBg());
-                }else {
+                } else {
                     view.setBackground(getCheckedBg());
                 }
-            }else {
-                if (i == mViewCount-1){
+            } else {
+                if (i == mViewCount - 1) {
                     view.setBackground(getNewEnergyNormalBg());
-                }else {
+                } else {
                     view.setBackground(getNormalBg());
                 }
             }
@@ -367,11 +373,52 @@ public class PlateNumView extends LinearLayout {
     }
 
     /**
+     * 键盘是否在展示的状态
+     *
+     * @return
+     */
+    public boolean isKeyBoardShowing() {
+        return mKeyboardPop.isShowing();
+    }
+
+    /**
      * 隐藏底部键盘
      */
     public void hidePlateKeyBord() {
         mKeyboardPop.dismiss();
     }
 
+    /**
+     * 项目中所有textview的监听
+     */
+    private class TextviewTextChanged implements TextWatcher {
 
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (mPlateNumViewTextWatcher != null) {
+                mPlateNumViewTextWatcher.onTextChanged(s.toString());
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    }
+
+    public void setmPlateNumViewTextWatcher(PlateNumViewTextWatcher mPlateNumViewTextWatcher) {
+        this.mPlateNumViewTextWatcher = mPlateNumViewTextWatcher;
+    }
+
+    /**
+     * 车牌号输入的实时监听
+     */
+    public interface PlateNumViewTextWatcher {
+        void onTextChanged(String s);
+    }
 }
