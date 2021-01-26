@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         plateNumView.setmPlateNumViewTextWatcher(new PlateNumView.PlateNumViewTextWatcher() {
             @Override
             public void onTextChanged(String s) {
-                Log.i("main",s);
+                Log.i("main",plateNumView.getPlateNum());
             }
         });
     }

@@ -53,7 +53,7 @@ public class LicensePlateView extends RelativeLayout implements View.OnClickList
             R.id.select_num_309_tv,
             R.id.select_num_400_tv, R.id.select_num_401_tv, R.id.select_num_402_tv,
             R.id.select_num_403_tv, R.id.select_num_404_tv, R.id.select_num_405_tv,
-            R.id.select_num_406_tv,
+            R.id.select_num_406_tv, R.id.select_num_407_tv,
             R.id.select_num_delete_tv
     };
 

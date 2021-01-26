@@ -270,6 +270,11 @@
             android:text="M"/>
 
         <TextView
+            android:id="@+id/select_num_407_tv"
+            style="@style/license_plate_num_textStyle"
+            android:text="警"/>
+
+        <TextView
             android:id="@+id/select_num_delete_tv"
             android:layout_width="75dp"
             android:layout_height="40dp"
