@@ -123,7 +123,7 @@ public class PlateNumView extends LinearLayout {
         }
 
         mKeyboardPop = new KeyBoardPop((Activity) mContext);
-        mKeyboardPop.setKeyBordlisten(new LicensePlateView.KeyBordClickListen() {
+        mKeyboardPop.   setKeyBordlisten(new LicensePlateView.KeyBordClickListen() {
             @Override
             public void text(String text) {
                 DrawableTextView textView = (DrawableTextView) mViewArrs[mIndicatePostion];
