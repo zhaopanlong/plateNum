@@ -11,9 +11,10 @@ import android.widget.EditText;
 
 import java.lang.reflect.Method;
 
-public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditText implements LicensePlateView.KeyBordClickListen {
+public class PlateNumEditText extends androidx.appcompat.widget.AppCompatEditText implements LicensePlateView.KeyBordClickListen {
 
     private KeyBoardPop mKeyBoardPop;
+
     public PlateNumEditText(Context context) {
         super(context);
         init();
@@ -29,12 +30,12 @@ public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditTe
         init();
     }
 
-    private void init(){
+    private void init() {
         // 设置不调用系统键盘
         if (android.os.Build.VERSION.SDK_INT <= 10) {
-           setInputType(InputType.TYPE_NULL);
+            setInputType(InputType.TYPE_NULL);
         } else {
-            ((Activity)getContext()).getWindow().setSoftInputMode(
+            ((Activity) getContext()).getWindow().setSoftInputMode(
                     WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             try {
                 Class<EditText> cls = EditText.class;
@@ -54,11 +55,8 @@ public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditTe
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mKeyBoardPop.isShowing()){
-                    mKeyBoardPop.showAtLocation(PlateNumEditText.this,Gravity.BOTTOM,0,0);
-                }
-                if (getSelectionStart() != 0){
-                    mKeyBoardPop.showNum();
+                if (!mKeyBoardPop.isShowing()) {
+                    mKeyBoardPop.showAtLocation(PlateNumEditText.this, Gravity.BOTTOM, 0, 0);
                 }
             }
         });
@@ -66,31 +64,38 @@ public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditTe
         setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && !mKeyBoardPop.isShowing()){
-                    mKeyBoardPop.showAtLocation(PlateNumEditText.this,Gravity.BOTTOM,0,0);
-                }
-                if (getSelectionStart() != 0){
-                    mKeyBoardPop.showNum();
+                if (hasFocus && !mKeyBoardPop.isShowing()) {
+                    mKeyBoardPop.showAtLocation(PlateNumEditText.this, Gravity.BOTTOM, 0, 0);
                 }
             }
         });
     }
 
     @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
+        if (mKeyBoardPop == null){
+            return;
+        }
+        if (getSelectionStart() == 0) {
+            mKeyBoardPop.showProvince();
+        }else {
+            mKeyBoardPop.showNum();
+        }
+    }
+
+    @Override
     public void text(String text) {
-        getEditableText().insert(getSelectionStart(),text);
-        mKeyBoardPop.showNum();
+        getEditableText().insert(getSelectionStart(), text);
+
     }
 
     @Override
     public void delete() {
         int index = getSelectionStart();
-        if (index == 0){
+        if (index == 0) {
             return;
         }
-        if (index == 1){
-            mKeyBoardPop.showProvince();
-        }
-        getText().delete(index-1,index);
+        getText().delete(index - 1, index);
     }
 }
