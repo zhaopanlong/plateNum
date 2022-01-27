@@ -72,7 +72,7 @@ public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditTe
 
     @Override
     public void text(String text) {
-        append(text);
+        getEditableText().insert(getSelectionStart(),text);
         mKeyBoardPop.showNum();
     }
 
