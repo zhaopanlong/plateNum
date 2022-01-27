@@ -57,6 +57,9 @@ public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditTe
                 if (!mKeyBoardPop.isShowing()){
                     mKeyBoardPop.showAtLocation(PlateNumEditText.this,Gravity.BOTTOM,0,0);
                 }
+                if (getSelectionStart() != 0){
+                    mKeyBoardPop.showNum();
+                }
             }
         });
 
@@ -65,6 +68,9 @@ public class PlateNumEditText  extends androidx.appcompat.widget.AppCompatEditTe
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus && !mKeyBoardPop.isShowing()){
                     mKeyBoardPop.showAtLocation(PlateNumEditText.this,Gravity.BOTTOM,0,0);
+                }
+                if (getSelectionStart() != 0){
+                    mKeyBoardPop.showNum();
                 }
             }
         });
