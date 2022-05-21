@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -123,7 +124,7 @@ public class PlateNumView extends LinearLayout {
         }
 
         mKeyboardPop = new KeyBoardPop((Activity) mContext);
-        mKeyboardPop.   setKeyBordlisten(new LicensePlateView.KeyBordClickListen() {
+        mKeyboardPop.setKeyBordlisten(new LicensePlateView.KeyBordClickListen() {
             @Override
             public void text(String text) {
                 DrawableTextView textView = (DrawableTextView) mViewArrs[mIndicatePostion];
@@ -184,6 +185,8 @@ public class PlateNumView extends LinearLayout {
 
         @Override
         public void onClick(View v) {
+            //隐藏系统软键盘 并且设置布局获取焦点
+            hideSoftInput(v);
             //重置指示器
             resetBg(v);
             //显示键盘
@@ -331,7 +334,7 @@ public class PlateNumView extends LinearLayout {
 
         char[] chars = plateNum.toCharArray();
         for (int i = 0; i < mViewArrs.length; i++) {
-            if (i>chars.length-1){
+            if (i > chars.length - 1) {
                 break;
             }
             DrawableTextView textView = (DrawableTextView) mViewArrs[i];
@@ -424,5 +427,19 @@ public class PlateNumView extends LinearLayout {
      */
     public interface PlateNumViewTextWatcher {
         void onTextChanged(String s);
+    }
+
+    /**
+     * 隐藏系统键盘
+     *
+     * @param view The view.
+     */
+    private void hideSoftInput(@NonNull final View view) {
+        InputMethodManager imm =
+                (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) {
+            return;
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

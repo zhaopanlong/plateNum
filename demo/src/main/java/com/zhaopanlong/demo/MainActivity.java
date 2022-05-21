@@ -1,5 +1,6 @@
 package com.zhaopanlong.demo;
 
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -21,6 +22,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(String s) {
                 Log.i("main",plateNumView.getPlateNum());
+            }
+        });
+
+        EditText etTest = findViewById(R.id.etTest);
+        etTest.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.i("MainActivity","etTest的焦点 = "+hasFocus);
             }
         });
     }
