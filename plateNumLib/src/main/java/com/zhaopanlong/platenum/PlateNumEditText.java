@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.lang.reflect.Method;
@@ -65,6 +66,10 @@ public class PlateNumEditText extends androidx.appcompat.widget.AppCompatEditTex
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus && !mKeyBoardPop.isShowing()) {
+                    //隐藏系统键盘
+                    InputMethodManager inputmanger = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputmanger.hideSoftInputFromWindow(getWindowToken(), 0);
+
                     mKeyBoardPop.showAtLocation(PlateNumEditText.this, Gravity.BOTTOM, 0, 0);
                 }
             }
