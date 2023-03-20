@@ -123,46 +123,49 @@ public class PlateNumView extends LinearLayout {
             textView.setOnClickListener(mTextViewOnClickListen);
         }
 
-        mKeyboardPop = new KeyBoardPop((Activity) mContext);
-        mKeyboardPop.setKeyBordlisten(new LicensePlateView.KeyBordClickListen() {
-            @Override
-            public void text(String text) {
-                DrawableTextView textView = (DrawableTextView) mViewArrs[mIndicatePostion];
-                textView.setText(text);
-                if (mIndicatePostion != mViewCount - 1) {
-                    mIndicatePostion++;
-                } else {
-                    //输入类型为新能源 也就是最后一位
-                    if (mIndicatePostion == mViewCount - 1) {
-                        textView.setTextSize(mTextSize);
-                        textView.setDrawable(DrawableTextView.TOP, null, 0, 0);
+        if (!isInEditMode()){
+            mKeyboardPop = new KeyBoardPop((Activity) mContext);
+            mKeyboardPop.setKeyBordlisten(new LicensePlateView.KeyBordClickListen() {
+                @Override
+                public void text(String text) {
+                    DrawableTextView textView = (DrawableTextView) mViewArrs[mIndicatePostion];
+                    textView.setText(text);
+                    if (mIndicatePostion != mViewCount - 1) {
+                        mIndicatePostion++;
+                    } else {
+                        //输入类型为新能源 也就是最后一位
+                        if (mIndicatePostion == mViewCount - 1) {
+                            textView.setTextSize(mTextSize);
+                            textView.setDrawable(DrawableTextView.TOP, null, 0, 0);
+                        }
+
+                        mKeyboardPop.dismiss();
+                        return;
                     }
+                    resetBg(mIndicatePostion);
+                    showKeyBoard();
+                }
 
-                    mKeyboardPop.dismiss();
-                    return;
+                @Override
+                public void delete() {
+                    DrawableTextView textView = (DrawableTextView) mViewArrs[mIndicatePostion];
+                    textView.setText(null);
+                    if (mIndicatePostion == 0) {
+                        return;
+                    }
+                    if (mIndicatePostion == mViewCount - 1) {
+                        //最后一位新能源
+                        Drawable drawableTop = AppCompatResources.getDrawable(mContext, R.mipmap.icaon_add_destribute);
+                        textView.setDrawable(DrawableTextView.TOP, drawableTop, drawableTop.getMinimumWidth(), drawableTop.getIntrinsicHeight());
+                        textView.setTextSize((float) (mTextSize / 1.5));
+                    }
+                    mIndicatePostion--;
+                    resetBg(mIndicatePostion);
+                    showKeyBoard();
                 }
-                resetBg(mIndicatePostion);
-                showKeyBoard();
-            }
+            });
+        }
 
-            @Override
-            public void delete() {
-                DrawableTextView textView = (DrawableTextView) mViewArrs[mIndicatePostion];
-                textView.setText(null);
-                if (mIndicatePostion == 0) {
-                    return;
-                }
-                if (mIndicatePostion == mViewCount - 1) {
-                    //最后一位新能源
-                    Drawable drawableTop = AppCompatResources.getDrawable(mContext, R.mipmap.icaon_add_destribute);
-                    textView.setDrawable(DrawableTextView.TOP, drawableTop, drawableTop.getMinimumWidth(), drawableTop.getIntrinsicHeight());
-                    textView.setTextSize((float) (mTextSize / 1.5));
-                }
-                mIndicatePostion--;
-                resetBg(mIndicatePostion);
-                showKeyBoard();
-            }
-        });
         if (mDefaultShowProvince) {
             handler.sendEmptyMessage(0);
         }
