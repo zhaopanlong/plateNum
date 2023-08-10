@@ -32,26 +32,29 @@ public class PlateNumEditText extends androidx.appcompat.widget.AppCompatEditTex
     }
 
     private void init() {
-        // 设置不调用系统键盘
-        if (android.os.Build.VERSION.SDK_INT <= 10) {
-            setInputType(InputType.TYPE_NULL);
-        } else {
-            ((Activity) getContext()).getWindow().setSoftInputMode(
-                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            try {
-                Class<EditText> cls = EditText.class;
-                Method setShowSoftInputOnFocus;
-                setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus",
-                        boolean.class);
-                setShowSoftInputOnFocus.setAccessible(true);
-                setShowSoftInputOnFocus.invoke(this, false);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (!isInEditMode()){
+            // 设置不调用系统键盘
+            if (android.os.Build.VERSION.SDK_INT <= 10) {
+                setInputType(InputType.TYPE_NULL);
+            } else {
+                ((Activity) getContext()).getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                try {
+                    Class<EditText> cls = EditText.class;
+                    Method setShowSoftInputOnFocus;
+                    setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus",
+                            boolean.class);
+                    setShowSoftInputOnFocus.setAccessible(true);
+                    setShowSoftInputOnFocus.invoke(this, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        mKeyBoardPop = new KeyBoardPop(getContext());
-        mKeyBoardPop.setKeyBordlisten(this);
+            mKeyBoardPop = new KeyBoardPop(getContext());
+            mKeyBoardPop.setKeyBordlisten(this);
+
+        }
 
         setOnClickListener(new OnClickListener() {
             @Override
