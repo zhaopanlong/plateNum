@@ -99,7 +99,7 @@ public class PlateNumView extends LinearLayout {
                 Drawable drawableTop = AppCompatResources.getDrawable(mContext, R.mipmap.icaon_add_destribute);
                 textView.setDrawable(DrawableTextView.TOP, drawableTop, drawableTop.getMinimumWidth(), drawableTop.getIntrinsicHeight());
                 textViewParams.setMargins(0, 0, 0, 0);
-                textView.setTextSize((float) (mTextSize / 1.5));
+                textView.setTextSize((float) (mTextSize / 2));
                 textView.setCompoundDrawablePadding(5);
                 textView.setHint("新能源");
                 textView.setBackground(getNewEnergyNormalBg());
@@ -156,7 +156,7 @@ public class PlateNumView extends LinearLayout {
                     //最后一位新能源
                     Drawable drawableTop = AppCompatResources.getDrawable(mContext, R.mipmap.icaon_add_destribute);
                     textView.setDrawable(DrawableTextView.TOP, drawableTop, drawableTop.getMinimumWidth(), drawableTop.getIntrinsicHeight());
-                    textView.setTextSize((float) (mTextSize / 1.5));
+                    textView.setTextSize((float) (mTextSize / 2));
                 }
                 mIndicatePostion--;
                 resetBg(mIndicatePostion);
